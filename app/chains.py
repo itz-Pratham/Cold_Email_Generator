@@ -39,9 +39,9 @@ class Chain:
             {job_description}
 
             ### INSTRUCTION:
-            {person_info}
+            {{person_info}}
 
-            {proj_desc}
+            {{proj_desc}}
 
             Your role is to write a cold email to the client regarding the job mentioned above, describing how your technical expertise, 
             proven project execution, and portfolio demonstrate alignment with their needs.
