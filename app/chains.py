@@ -32,21 +32,16 @@ class Chain:
             raise OutputParserException("Context too big. Unable to parse jobs.")
         return res if isinstance(res, list) else [res]
 
-    def write_mail(self, job, links):
+    def write_mail(self, job, links, person_info, proj_desc):
         prompt_email = PromptTemplate.from_template(
             """
             ### JOB DESCRIPTION:
             {job_description}
 
             ### INSTRUCTION:
-            You are Pratham Mittal, a passionate and skilled software and machine learning developer based in New Delhi.
-            With a strong foundation in Computer Science (CGPA: 9.11), hands-on experience at DRDO as a Machine Learning Intern,
-            and over 600 DSA problems solved, you bring robust analytical and coding capabilities to the table.
+            {person_info}
 
-            You’ve built and deployed multiple impactful projects, including:
-            - An Amazon Review Sentiment Analyzer with a Streamlit UI and 93.49% accuracy,
-            - A Transaction Analyzer with visual breakdowns for financial insights,
-            - EventVerse, a full-stack React + Firebase event listing app.
+            {proj_desc}
 
             Your role is to write a cold email to the client regarding the job mentioned above, describing how your technical expertise, 
             proven project execution, and portfolio demonstrate alignment with their needs.
