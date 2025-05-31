@@ -8,4 +8,4 @@ streamlit
 pandas
 onnxruntime
 python-dotenv
-sqlite3
+sqlite-utils
