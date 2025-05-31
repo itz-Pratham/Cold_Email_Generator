@@ -9,3 +9,4 @@ pandas
 onnxruntime
 python-dotenv
 sqlite-utils
+pysqlite3-binary
