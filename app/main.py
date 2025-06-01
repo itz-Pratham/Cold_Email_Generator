@@ -39,8 +39,8 @@ def create_streamlit_app(llm, portfolio: Portfolio, clean_text):
         project_desc = st.text_area("Enter your project description:", height=150)
 
     # Section: Upload Portfolio (always visible)
-    # st.markdown("#### Upload your `portfolio.csv` (Optional)")
-    uploaded_file = st.file_uploader("### Upload your `portfolio` (Optional)", type=["csv"])
+    st.markdown("#### Upload your `portfolio.csv` (Optional)")
+    uploaded_file = st.file_uploader("", type=["csv"])
     if uploaded_file is not None:
         with open("app/data/portfolio.csv", "wb") as f:
             f.write(uploaded_file.getbuffer())
