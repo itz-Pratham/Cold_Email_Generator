@@ -40,7 +40,7 @@ def create_streamlit_app(llm, portfolio: Portfolio, clean_text):
 
     # Section: Upload Portfolio (always visible)
     st.markdown("#### Upload your `portfolio.csv` (Optional)")
-    uploaded_file = st.file_uploader("", type=["csv"])
+    uploaded_file = st.file_uploader(" ", type=["csv"], label_visibility="collapsed")
     if uploaded_file is not None:
         with open("app/data/portfolio.csv", "wb") as f:
             f.write(uploaded_file.getbuffer())
