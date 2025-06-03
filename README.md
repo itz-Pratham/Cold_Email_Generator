@@ -34,4 +34,4 @@ pip install -r requirements.txt
 streamlit run app/main.py
 ```
 
-** Make sure you have your OpenAI API key set in the environment for LLM calls.
+Make sure you have your OpenAI API key set in the environment for LLM calls.
