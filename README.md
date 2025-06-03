@@ -32,6 +32,6 @@ A Generative AI-powered web app that creates personalized cold emails for job ap
 ```bash
 pip install -r requirements.txt
 streamlit run app/main.py
-
+```
 
 ** Make sure you have your OpenAI API key set in the environment for LLM calls.
