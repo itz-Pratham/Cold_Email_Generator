@@ -1,5 +1,6 @@
 # portfolio.py
 import pandas as pd
+from langchain.vectorstores import Chroma
 from langchain.embeddings import HuggingFaceEmbeddings
 import pysqlite3
 import sys
@@ -14,11 +15,16 @@ class Portfolio:
     def __init__(self, file_path="app/data/portfolio.csv", default_path="app/data/portfolio_default.csv"):
         self.file_path = file_path
         self.default_path = default_path
-        self.embedding_function = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+        embedding_function = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
         self.chroma_client = chromadb.PersistentClient('vectorstore')
-        self.collection = self.chroma_client.get_or_create_collection(
-            name="portfolio",
-            embedding_function=self.embedding_function
+        # self.collection = self.chroma_client.get_or_create_collection(
+        #     name="portfolio",
+        #     embedding_function=self.embedding_function
+        # )
+        self.collection = Chroma(
+            collection_name="portfolio",
+            embedding_function=embedding_function,
+            persist_directory="vectorstore"
         )
         self.data = None
 
@@ -39,11 +45,19 @@ class Portfolio:
             self.collection.delete(ids=self.collection.get()['ids'])
 
         for _, row in self.data.iterrows():
-            self.collection.add(
-                documents=row["Techstack"],
-                metadatas={"links": row["Links"]},
-                ids=[str(uuid.uuid4())]
+            # self.collection.add(
+            #     documents=row["Techstack"],
+            #     metadatas={"links": row["Links"]},
+            #     ids=[str(uuid.uuid4())]
+            # )
+            self.collection.add_texts(
+                texts=[row["Techstack"]],
+                metadatas=[{"links": row["Links"]}]
             )
 
+
     def query_links(self, skills):
-        return self.collection.query(query_texts=skills, n_results=2).get('metadatas', [])
+        # return self.collection.query(query_texts=skills, n_results=2).get('metadatas', [])
+        results = self.collection.similarity_search(query=skills, k=2)
+        return [doc.metadata for doc in results]
+
