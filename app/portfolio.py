@@ -1,5 +1,6 @@
 # portfolio.py
 import pandas as pd
+from langchain.embeddings import HuggingFaceEmbeddings
 import pysqlite3
 import sys
 sys.modules["sqlite3"] = sys.modules.pop("pysqlite3")
@@ -13,8 +14,12 @@ class Portfolio:
     def __init__(self, file_path="app/data/portfolio.csv", default_path="app/data/portfolio_default.csv"):
         self.file_path = file_path
         self.default_path = default_path
+        self.embedding_function = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
         self.chroma_client = chromadb.PersistentClient('vectorstore')
-        self.collection = self.chroma_client.get_or_create_collection(name="portfolio")
+        self.collection = self.chroma_client.get_or_create_collection(
+            name="portfolio",
+            embedding_function=self.embedding_function
+        )
         self.data = None
 
     def reset_to_default(self):
